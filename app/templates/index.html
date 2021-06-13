@@ -1,12 +1,9 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}FinalProj{% endblock %}
+{% block title %}RandomUser{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-    <h1>INPUT {{number}}, table {{counter}}</h1>
-</div>
 {{ wtf.quick_form(form) }}
 <div class="page-header">
     <h2>Table of all users</h2>
@@ -31,7 +28,7 @@
     <tbody>
     {% for user in users %}
     <tr>
-        <th scope="row">{{ user.id }}</th>
+        <th scope="row">{{ user.user_id }}</th>
         <td>{{ user.sex }}</td>
         <td>{{ user.first_name }}</td>
         <td>{{ user.last_name }}</td>
@@ -44,6 +41,16 @@
     {% endfor %}
     </tbody>
 </table>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="1">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="2">1</a></li>
+    <li class="page-item"><a class="page-link" href="3">2</a></li>
+    <li class="page-item"><a class="page-link" href="4">3</a></li>
+    <li class="page-item"><a class="page-link" href="5">Next</a></li>
+  </ul>
+</nav>
 {% endblock %}
 
 

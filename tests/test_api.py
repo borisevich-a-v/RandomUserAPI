@@ -5,37 +5,44 @@ from app.api import api_data
 
 
 class FakeResponse:
-	def __init__(self, status_code, text):
-		self.status_code = status_code
-		self.text = text
+    """Fake response for requests.get"""
+
+    def __init__(self, status_code, text):
+        """Constructor method"""
+        self.status_code = status_code
+        self.text = text
 
 
 class FakeRequests:
-	def __init__(self, status_code, text):
-		self.response = FakeResponse(status_code, text)
+    """Fake requests"""
 
-	def get(self, *args, **kwargs):
-		return self.response
+    def __init__(self, status_code, text):
+        """Constructor method"""
+        self.response = FakeResponse(status_code, text)
+
+    def get(self, *args, **kwargs):
+        """Fake requests.get()"""
+        return self.response
 
 
 def test_bad_status_code(monkeypatch):
-	"""Test bad response status code"""
-	monkeypatch.setattr(api_data, 'requests', FakeRequests(404, 'a'))
+    """Test bad response status code"""
+    monkeypatch.setattr(api_data, "requests", FakeRequests(404, "a"))
 
-	with pytest.raises(api_data.BadAPIStatusCode):
-		api_data.make_request(1)
+    with pytest.raises(api_data.BadAPIStatusCode):
+        api_data.make_request(1)
 
 
 def test_bad_json():
-	"""Test if we get bad json"""
-	response = FakeResponse(200, 'not a json')
-	with pytest.raises(api_data.BadRawJSON):
-		api_data.convert_raw_json(response.text, 1)
+    """Test if we get bad json"""
+    response = FakeResponse(200, "not a json")
+    with pytest.raises(api_data.BadRawJSON):
+        api_data.convert_raw_json(response.text, 1)
 
 
 def test_positive_api(monkeypatch):
-	"""Test if all is ok"""
-	json_test = """{"results":{"is_json":true},"info":{"results":1}}"""
-	monkeypatch.setattr(api_data, 'requests', FakeRequests(200, json_test))
-	users = api_data.get_users(1)
-	assert users == {'is_json': True}
+    """Test if all is ok"""
+    json_test = """{"results":{"is_json":true},"info":{"results":1}}"""
+    monkeypatch.setattr(api_data, "requests", FakeRequests(200, json_test))
+    users = api_data.get_users(1)
+    assert users == {"is_json": True}
