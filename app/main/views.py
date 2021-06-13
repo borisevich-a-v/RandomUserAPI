@@ -27,7 +27,8 @@ def index():
 
 def get_user_template(user_id):
     """Render user_template by user_id"""
-    return render_template("user.html", user_id=user_id)
+    user = User.query.filter_by(user_id=user_id).first_or_404(user_id)
+    return render_template("user.html", user=user, user_id=user_id)
 
 
 @main.route("/user/<user_id>")
@@ -43,6 +44,6 @@ def user(user_id):
 @main.route("/random")
 def user_random():
     """Return user profile by id"""
-    number_of_users = 1000
+    number_of_users = User.query.count()
     user_id = randint(1, number_of_users)
     return get_user_template(user_id)

@@ -1,7 +1,74 @@
 {% extends "base.html" %}
 {% block title %}User: {{ user_id }}{% endblock %}
+
 {% block page_content %}
 <div class="page-header">
-    <h1>User{{ user_id }}!</h1>
+    <h2>{{user_id}}. {{ user.title}} {{ user.first_name }} {{ user.last_name }}</h2>
 </div>
+<div style="height: 130px">
+    <img src="{{ user.picture_l }}" align="left" hspace="20">
+    <ul class="list-unstyled h4">
+        <li>Gender: {{ user.gender }}</li>
+        <li>Email: {{ user.email }}</li>
+        <li>Phone: {{ user.phone }}</li>
+        <li>{{ user.age }} years</li>
+        <li>nat: {{ user.nat }}</li>
+        <li></li>
+    </ul>
+</div>
+
+<div class="h3">
+    <ul class="list-unstyled h5">
+
+        <li>Cell: {{ user.cell }}</li>
+        <li>DoB: {{ user.date_of_birth }}
+    </ul>
+
+    location:
+    <ul class="list-unstyled h5">
+        <li>Street number: {{ user.street_number }}
+        <li>Street name: {{ user.street_name }}
+        <li>City: {{ user.city }}
+        <li>State: {{ user.state }}
+        <li>Country: {{ user.country }}
+        <li>Postcode: {{ user.postcode }}
+        <li>Latitude: {{ user.latitude }}
+        <li>Longitude: {{ user.longitude }}
+        <li>Timezone offset: {{ user.timezone_offset }}
+        <li>Timezone description: {{ user.timezone_description }}
+
+    </ul>
+    Login:
+    <ul class="list-unstyled h5">
+        <li>uuid: {{ user.uuid }}
+        <li>username: {{ user.username }}
+        <li>password: {{ user.password }}
+        <li>salt: {{ user.salt }}
+        <li>md5: {{ user.md5 }}
+        <li>sha1: {{ user.sha1 }}
+        <li>sha256: {{ user.sha256 }}
+    </ul>
+
+    Registered:
+    <ul class="list-unstyled h5">
+        <li>Date: {{ user.registered_date }}
+        <li>{{ user.registered_age }} years ago
+    </ul>
+
+    id:
+    <ul class="list-unstyled h5">
+        <li>name: {{ user.id_name }}</li>
+        <li>value: {{ user.id_value }}</li>
+    </ul>
+
+    Pictures URL:
+    <ul class="list-unstyled h5">
+        <li>Large picture: <a href="{{user.picture_l}}">{{user.picture_l}}</a></li>
+        <li>Medium picture: <a href="{{user.picture_l}}">{{user.picture_m}}</a></li>
+        <li>Small picture: <a href="{{user.picture_l}}">{{user.picture_s}}</a></li>
+    </ul>
+
+
+</div>
+
 {% endblock %}
