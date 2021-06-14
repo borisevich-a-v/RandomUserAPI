@@ -11,6 +11,8 @@ class Config(metaclass=ABCMeta):
 	SECRET_KEY = os.environ.get("SECRET_KEY") or "password"
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	MAIN_PAGE_ROW_PER_PAGE = 50
+	UPLOAD_FOLDER = 'app/static/upload'
+	ALLOWED_EXTENSIONS = {'jpg'}
 
 	@staticmethod
 	def init_app(app):

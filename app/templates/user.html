@@ -10,7 +10,7 @@
     <table width="100%">
         <tr>
             <td width="150px">
-                <img src="{{ user.picture_l }}" align="left">
+                <img src="/static/portraits/large/{{ user.portrait_id  }}.jpg" align="left">
             </td>
             <td align="left" valign="top">
                 <ul class="list-unstyled h5">
@@ -20,10 +20,13 @@
                     <li>{{ user.age }} years</li>
                     <li>nat: {{ user.nat }}</li>
                     <li></li>
-                </ul>
+
             </td>
             <td align="right" valign="top">
-                <a href="/user/{{user_id}}/change"><big><big>✎</big>Change </big> </a>
+                <ul class="list-unstyled h5">
+                    <li><a href="/user/{{user_id}}/change_data"><big><big>✎</big>Change text</big></a>
+                    <li><a href="/user/{{user_id}}/change_portrait"><big><big>✎</big>Change photo</big></a>
+                </ul>
             </td>
         </tr>
     </table>
@@ -73,15 +76,5 @@
         <li>name: {{ user.id_name }}</li>
         <li>value: {{ user.id_value }}</li>
     </ul>
-
-    Pictures URL:
-    <ul class="list-unstyled h5">
-        <li>Large picture: <a href="{{user.picture_l}}">{{user.picture_l}}</a></li>
-        <li>Medium picture: <a href="{{user.picture_l}}">{{user.picture_m}}</a></li>
-        <li>Small picture: <a href="{{user.picture_l}}">{{user.picture_s}}</a></li>
-    </ul>
-
-
 </div>
-
 {% endblock %}

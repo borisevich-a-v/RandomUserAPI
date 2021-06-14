@@ -38,7 +38,7 @@
         <td>{{ user.phone }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.country }}, {{ user.city }}</td>
-        <td><img src="{{ user.picture_s }}"></td>
+        <td><img src="/static/portraits/thumbnail/{{ user.portrait_id }}.jpg"></td>
         <td><a href="/user/{{ user.user_id }}">Go to profile{{ user.id }}</a></td>
     </tr>
     {% endfor %}

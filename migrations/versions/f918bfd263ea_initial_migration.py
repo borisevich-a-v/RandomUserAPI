@@ -1,8 +1,8 @@
-"""initia migration
+"""initial migration
 
-Revision ID: 07e8e0607ebb
+Revision ID: f918bfd263ea
 Revises: 
-Create Date: 2021-06-13 13:42:52.642937
+Create Date: 2021-06-14 22:13:21.027804
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '07e8e0607ebb'
+revision = 'f918bfd263ea'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -45,15 +45,13 @@ def upgrade():
     sa.Column('md5', sa.String(length=32), nullable=True),
     sa.Column('sha1', sa.String(length=40), nullable=True),
     sa.Column('sha256', sa.String(length=64), nullable=True),
-    sa.Column('data_of_birth', sa.String(length=32), nullable=True),
+    sa.Column('date_of_birth', sa.String(length=32), nullable=True),
     sa.Column('age', sa.SmallInteger(), nullable=True),
     sa.Column('registered_date', sa.String(length=32), nullable=True),
     sa.Column('registered_age', sa.SmallInteger(), nullable=True),
     sa.Column('id_name', sa.String(), nullable=True),
     sa.Column('id_value', sa.String(), nullable=True),
-    sa.Column('picture_l', sa.String(), nullable=True),
-    sa.Column('picture_m', sa.String(), nullable=True),
-    sa.Column('picture_s', sa.String(), nullable=True),
+    sa.Column('portrait_id', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('user_id')
     )
     op.create_index(op.f('ix_users_user_id'), 'users', ['user_id'], unique=False)

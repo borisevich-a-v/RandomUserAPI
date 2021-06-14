@@ -46,9 +46,7 @@ class User(db.Model):
 	id_name = db.Column(db.String)
 	id_value = db.Column(db.String)
 	# Pictures
-	picture_l = db.Column(db.String)
-	picture_m = db.Column(db.String)
-	picture_s = db.Column(db.String)
+	portrait_id = db.Column(db.Integer)
 
 
 	def __repr__(self):

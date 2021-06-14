@@ -67,9 +67,7 @@ class ChangeUserDataForm(FlaskForm):
 	id_name = StringField('id_name')
 	id_value = StringField('id_value')
 	# Pictures
-	picture_l = StringField('picture_l')
-	picture_m = StringField('picture_m')
-	picture_s = StringField('picture_s')
+	portrait_id = StringField('portrait_id')
 
 
 

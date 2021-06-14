@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 /activate_develompent
 /data-dev.sqlite
+/app/static/portraits/
+/app/static/upload/

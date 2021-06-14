@@ -29,15 +29,15 @@ def test_bad_status_code(monkeypatch):
     """Test bad response status code"""
     monkeypatch.setattr(api_data, "requests", FakeRequests(404, "a"))
 
-    with pytest.raises(api_data.BadAPIStatusCode):
-        api_data.make_request(1)
+    with pytest.raises(api_data.BadAPIResponse):
+	    api_data.make_request_users(1)
 
 
 def test_bad_json():
     """Test if we get bad json"""
     response = FakeResponse(200, "not a json")
     with pytest.raises(api_data.BadRawJSON):
-        api_data.convert_raw_json(response.text, 1)
+	    api_data.get_users_json(response.text)
 
 
 def test_positive_api(monkeypatch):
