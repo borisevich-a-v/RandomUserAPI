@@ -53,7 +53,7 @@ class User(db.Model):
 
 	def __repr__(self):
 		args = [
-			arg + "=" + "'" + self.__dict__[arg] + "'"
+			arg + "=" + "'" + str(self.__dict__[arg]) + "'"
 			for arg in self.__dict__
 			if not arg.startswith("_")
 		]

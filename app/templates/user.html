@@ -5,17 +5,30 @@
 <div class="page-header">
     <h2>{{user_id}}. {{ user.title}} {{ user.first_name }} {{ user.last_name }}</h2>
 </div>
-<div style="height: 130px">
-    <img src="{{ user.picture_l }}" align="left" hspace="20">
-    <ul class="list-unstyled h4">
-        <li>Gender: {{ user.gender }}</li>
-        <li>Email: {{ user.email }}</li>
-        <li>Phone: {{ user.phone }}</li>
-        <li>{{ user.age }} years</li>
-        <li>nat: {{ user.nat }}</li>
-        <li></li>
-    </ul>
+
+<div>
+    <table width="100%">
+        <tr>
+            <td width="150px">
+                <img src="{{ user.picture_l }}" align="left">
+            </td>
+            <td align="left" valign="top">
+                <ul class="list-unstyled h5">
+                    <li>Gender: {{ user.gender }}</li>
+                    <li>Email: {{ user.email }}</li>
+                    <li>Phone: {{ user.phone }}</li>
+                    <li>{{ user.age }} years</li>
+                    <li>nat: {{ user.nat }}</li>
+                    <li></li>
+                </ul>
+            </td>
+            <td align="right" valign="top">
+                <a href="/user/{{user_id}}/change"><big><big>✎</big>Change </big> </a>
+            </td>
+        </tr>
+    </table>
 </div>
+
 
 <div class="h3">
     <ul class="list-unstyled h5">

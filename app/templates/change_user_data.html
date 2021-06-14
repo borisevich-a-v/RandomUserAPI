@@ -1,0 +1,10 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+
+{% block title %}Change User Data: {{ user_id }}{% endblock %}
+
+{% block page_content %}
+
+{{ wtf.quick_form(form) }}
+
+{% endblock %}

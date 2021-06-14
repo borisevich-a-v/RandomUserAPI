@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% import "_macro.html" as macros %}
 
 {% block title %}RandomUser{% endblock %}
 
 {% block page_content %}
-{{ wtf.quick_form(form) }}
+
+    {{ wtf.quick_form(users_to_load_form) }}
+
 <div class="page-header">
     <h2>Table of all users</h2>
 </div>
@@ -42,15 +45,12 @@
     </tbody>
 </table>
 
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="1">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="2">1</a></li>
-    <li class="page-item"><a class="page-link" href="3">2</a></li>
-    <li class="page-item"><a class="page-link" href="4">3</a></li>
-    <li class="page-item"><a class="page-link" href="5">Next</a></li>
-  </ul>
-</nav>
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.index') }}
+    {{ wtf.quick_form(users_per_page_form) }}
+</div>
+{% endif %}
 {% endblock %}
 
 
