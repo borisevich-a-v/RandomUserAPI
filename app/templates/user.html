@@ -20,9 +20,9 @@
             </td>
             <td align="right" valign="top">
                 <ul class="list-unstyled h5">
-                    <li><a href="/user/{{user_id}}/change_data"><big><big>✎</big>Change
+                    <li><a href="/{{user_id}}/change_data"><big><big>✎</big>Change
                         text</big></a>
-                    <li><a href="/user/{{user_id}}/change_portrait"><big><big>✎</big>Change
+                    <li><a href="/{{user_id}}/change_portrait"><big><big>✎</big>Change
                         photo</big></a>
                 </ul>
             </td>
@@ -32,18 +32,12 @@
 
 
 <div class="h3">
-    <ul class="list-unstyled h5">
-
-        <li>Cell: {{ user.cell }}</li>
-        <li>DoB: {{ user.date_of_birth }}
-    </ul>
-
     location:
     <ul class="list-unstyled h5">
-        <li>Street name: {{ user.street_name }}
-        <li>City: {{ user.city }}
-        <li>State: {{ user.state }}
         <li>Country: {{ user.country }}
+        <li>State: {{ user.state }}
+        <li>City: {{ user.city }}
+        <li>Street name: {{ user.street_name }}
         <li>Postcode: {{ user.postcode }}
     </ul>
 </div>

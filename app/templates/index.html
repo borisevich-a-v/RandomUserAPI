@@ -6,7 +6,18 @@
 
 {% block page_content %}
 
-    {{ wtf.quick_form(users_to_load_form) }}
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+
+{{ wtf.quick_form(users_to_load_form) }}
+
+
 
 <div class="page-header">
     <h2>Table of all users</h2>
@@ -37,9 +48,11 @@
         <td>{{ user.last_name }}</td>
         <td>{{ user.phone }}</td>
         <td>{{ user.email }}</td>
-        <td>{{ user.country }}, {{ user.city }}</td>
-        <td><img src="/static/portraits/thumbnail/{{ user.portrait_id }}.jpg"></td>
-        <td><a href="/user/{{ user.user_id }}">Go to profile{{ user.id }}</a></td>
+        <td>{{ user.country }}, {{ user.city }},<br>{{ user.street_name }}, {{
+            user.postcode }}
+        </td>
+        <td><img src="{{ user.portrait_thumbnail}}"></td>
+        <td><a href="/{{ user.user_id }}">Go to profile{{ user.id }}</a></td>
     </tr>
     {% endfor %}
     </tbody>
