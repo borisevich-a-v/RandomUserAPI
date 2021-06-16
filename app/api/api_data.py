@@ -81,50 +81,52 @@ def convert_into_users(jsons_dict: dict) -> List[User]:
 	"""Convert specific JSON into User"""
 	users = []
 	for user_data in jsons_dict:
-		portrait_number = get_portrait_id(user_data)
 		user = User(
 			gender=user_data["gender"],
 			email=user_data["email"],
 			phone=user_data["phone"],
-			cell=user_data["cell"],
-			nat=user_data["nat"],
+			# cell=user_data["cell"],
+			# nat=user_data["nat"],
 			# Name
-			title=user_data["name"]["title"],
+			# title=user_data["name"]["title"],
 			first_name=user_data["name"]["first"],
 			last_name=user_data["name"]["last"],
 			# Location
-			street_number=user_data["location"]["street"]["number"],
+			# street_number=user_data["location"]["street"]["number"],
 			street_name=user_data["location"]["street"]["name"],
 			city=user_data["location"]["city"],
 			state=user_data["location"]["state"],
 			country=user_data["location"]["country"],
 			postcode=user_data["location"]["postcode"],
-			latitude=user_data["location"]["coordinates"]["latitude"],
-			longitude=user_data["location"]["coordinates"]["longitude"],
-			timezone_offset=user_data["location"]["timezone"]["offset"],
-			timezone_description=user_data["location"]["timezone"]["description"],
+			# latitude=user_data["location"]["coordinates"]["latitude"],
+			# longitude=user_data["location"]["coordinates"]["longitude"],
+			# timezone_offset=user_data["location"]["timezone"]["offset"],
+			# timezone_description=user_data["location"]["timezone"]["description"],
 			# Login
-			uuid=user_data["login"]["uuid"],
-			username=user_data["login"]["username"],
-			password=user_data["login"]["password"],
-			salt=user_data["login"]["salt"],
-			md5=user_data["login"]["md5"],
-			sha1=user_data["login"]["sha1"],
-			sha256=user_data["login"]["sha256"],
+			# uuid=user_data["login"]["uuid"],
+			# username=user_data["login"]["username"],
+			# password=user_data["login"]["password"],
+			# salt=user_data["login"]["salt"],
+			# md5=user_data["login"]["md5"],
+			# sha1=user_data["login"]["sha1"],
+			# sha256=user_data["login"]["sha256"],
 			# Date of birth
-			date_of_birth=user_data["dob"]["date"],
-			age=user_data["dob"]["age"],
+			# date_of_birth=user_data["dob"]["date"],
+			# age=user_data["dob"]["age"],
 			# registered
-			registered_date=user_data["registered"]["date"],
-			registered_age=user_data["registered"]["age"],
+			# registered_date=user_data["registered"]["date"],
+			# registered_age=user_data["registered"]["age"],
 			# id
-			id_name=user_data["id"]["name"],
-			id_value=user_data["id"]["value"],
+			# id_name=user_data["id"]["name"],
+			# id_value=user_data["id"]["value"],
 			# Pictures
-			portrait_id=portrait_number,
+			portrait_large=user_data["picture"]["large"],
+			# portrait_medium=user_data["picture"]["medium"],
+			portrait_thumbnail=user_data["picture"]["thumbnail"],
+
 		)
 		users.append(user)
-	download_portraits(jsons_dict)
+	# download_portraits(jsons_dict)
 	return users
 
 

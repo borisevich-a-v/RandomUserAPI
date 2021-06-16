@@ -10,22 +10,20 @@
     <table width="100%">
         <tr>
             <td width="150px">
-                <img src="/static/portraits/large/{{ user.portrait_id  }}.jpg" align="left">
+                <img src="{{ user.portrait_large }}" align="left">
             </td>
             <td align="left" valign="top">
                 <ul class="list-unstyled h5">
                     <li>Gender: {{ user.gender }}</li>
                     <li>Email: {{ user.email }}</li>
                     <li>Phone: {{ user.phone }}</li>
-                    <li>{{ user.age }} years</li>
-                    <li>nat: {{ user.nat }}</li>
-                    <li></li>
-
             </td>
             <td align="right" valign="top">
                 <ul class="list-unstyled h5">
-                    <li><a href="/user/{{user_id}}/change_data"><big><big>✎</big>Change text</big></a>
-                    <li><a href="/user/{{user_id}}/change_portrait"><big><big>✎</big>Change photo</big></a>
+                    <li><a href="/user/{{user_id}}/change_data"><big><big>✎</big>Change
+                        text</big></a>
+                    <li><a href="/user/{{user_id}}/change_portrait"><big><big>✎</big>Change
+                        photo</big></a>
                 </ul>
             </td>
         </tr>
@@ -42,39 +40,11 @@
 
     location:
     <ul class="list-unstyled h5">
-        <li>Street number: {{ user.street_number }}
         <li>Street name: {{ user.street_name }}
         <li>City: {{ user.city }}
         <li>State: {{ user.state }}
         <li>Country: {{ user.country }}
         <li>Postcode: {{ user.postcode }}
-        <li>Latitude: {{ user.latitude }}
-        <li>Longitude: {{ user.longitude }}
-        <li>Timezone offset: {{ user.timezone_offset }}
-        <li>Timezone description: {{ user.timezone_description }}
-
-    </ul>
-    Login:
-    <ul class="list-unstyled h5">
-        <li>uuid: {{ user.uuid }}
-        <li>username: {{ user.username }}
-        <li>password: {{ user.password }}
-        <li>salt: {{ user.salt }}
-        <li>md5: {{ user.md5 }}
-        <li>sha1: {{ user.sha1 }}
-        <li>sha256: {{ user.sha256 }}
-    </ul>
-
-    Registered:
-    <ul class="list-unstyled h5">
-        <li>Date: {{ user.registered_date }}
-        <li>{{ user.registered_age }} years ago
-    </ul>
-
-    id:
-    <ul class="list-unstyled h5">
-        <li>name: {{ user.id_name }}</li>
-        <li>value: {{ user.id_value }}</li>
     </ul>
 </div>
 {% endblock %}
