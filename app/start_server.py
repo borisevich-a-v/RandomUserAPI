@@ -2,7 +2,7 @@
 import os
 
 from app import db
-from app.api.api_data import collect_more_users
+from app.api_data import collect_more_users
 from app.models import User
 
 
@@ -17,6 +17,7 @@ def create_paths():
 def make_routines():
     """Tasks for starting server"""
     create_paths()
+
     from epam import app
 
     with app.app_context():

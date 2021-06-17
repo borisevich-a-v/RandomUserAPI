@@ -12,7 +12,7 @@ from PIL import Image
 from werkzeug.utils import redirect, secure_filename
 
 from .. import db
-from ..api.api_data import collect_more_users
+from app.api_data import collect_more_users
 from ..models import User
 from . import main
 from .forms import ChangeUserDataForm, NumberUsersToLoadForm, UsersPerPageForm

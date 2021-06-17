@@ -1,48 +1,49 @@
-# """Test API"""
-# import pytest
-#
-# from app.api import api_data
-#
-#
-# class FakeResponse:
-#     """Fake response for requests.get"""
-#
-#     def __init__(self, status_code, text):
-#         """Constructor method"""
-#         self.status_code = status_code
-#         self.text = text
-#
-#
-# class FakeRequests:
-#     """Fake requests"""
-#
-#     def __init__(self, status_code, text):
-#         """Constructor method"""
-#         self.response = FakeResponse(status_code, text)
-#
-#     def get(self, *args, **kwargs):
-#         """Fake requests.get()"""
-#         return self.response
-#
-#
-# def test_bad_status_code(monkeypatch):
-#     """Test bad response status code"""
-#     monkeypatch.setattr(api_data, "requests", FakeRequests(404, "a"))
-#
-#     with pytest.raises(api_data.BadAPIResponse):
-#         api_data.make_request_users(1)
-#
-#
-# def test_bad_json():
-#     """Test if we get bad json"""
-#     response = FakeResponse(200, "not a json")
-#     with pytest.raises(api_data.BadRawJSON):
-#         api_data.get_users_json(response.text)
-#
-#
-# def test_positive_api(monkeypatch):
-#     """Test if all is ok"""
-#     json_test = """{"results":{"is_json":true},"info":{"results":1}}"""
-#     monkeypatch.setattr(api_data, "requests", FakeRequests(200, json_test))
-#     users = api_data.get_users(1)
-#     assert users == {"is_json": True}
+"""Test API"""
+import json
+from copy import deepcopy
+from unittest.mock import MagicMock
+
+import pytest
+
+import epam
+from app import api_data
+from app.models import User
+from tests.conftest import TEST_USERS, FakeRequests
+
+
+def test_bad_status_code(monkeypatch):
+    """Test bad response status code"""
+    monkeypatch.setattr(api_data, "requests", FakeRequests(401, "a"))
+
+    with pytest.raises(api_data.BadAPIResponse):
+        api_data.get_users_json(1)
+
+
+def test_bad_json(monkeypatch):
+    """Test if we get bad json"""
+    monkeypatch.setattr(api_data, "requests", FakeRequests(200, "a"))
+    with pytest.raises(api_data.BadRawJSON):
+        api_data.get_users_json(1)
+
+
+def test_get_user_json_positive(monkeypatch):
+    """Test that get and convert data from internet correct"""
+    fake_api_json = json.dumps(
+        {"info": {"results": 1}, "results": [deepcopy(TEST_USERS[0])]}
+    )
+
+    monkeypatch.setattr(api_data, "requests", FakeRequests(200, fake_api_json))
+    result = api_data.get_users_json(1)
+    assert len(result) == 1
+    assert result[0]["gender"] == "male"
+    assert result[0]["location"]["city"] == "Liverpool"
+
+
+def test_collect_more_users(context):
+    """Test that collect more users add users into database"""
+    fake_users_json = [deepcopy(TEST_USERS[0])]
+    api_data.get_users_json = MagicMock(return_value=fake_users_json)
+    epam.app.app_context = MagicMock(return_value=context["app"].app_context())
+    api_data.collect_more_users(1)
+    count = User.query.count()
+    assert count == 1

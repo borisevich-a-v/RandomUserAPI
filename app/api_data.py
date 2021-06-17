@@ -43,7 +43,7 @@ def get_users_json(user_number: int) -> List[dict]:
             raise BadRawJSON
     except (ValueError, KeyError) as error:
         raise BadRawJSON from error
-
+    print(data["results"])
     return data["results"]
 
 
