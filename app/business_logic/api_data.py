@@ -91,7 +91,7 @@ def collect_more_users(number: int) -> None:
         db.session.commit()
 
 
-def collect_more_users_thread(number: int) -> None:
+def collect_more_users_async(number: int) -> None:
     """Create thread and run in it collect_more_users
     :param number: number of users to add
     :type number: `int`"""

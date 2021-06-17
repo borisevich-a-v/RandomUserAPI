@@ -4,7 +4,7 @@ from random import randint
 from flask import current_app, flash, render_template, request, url_for
 from werkzeug.utils import redirect
 
-from app.business_logic.api_data import collect_more_users_thread
+from app.business_logic.api_data import collect_more_users_async
 from app.business_logic.change_user import (
     change_data,
     change_portrait,
@@ -24,7 +24,7 @@ def index():
     row_on_page_form = UsersPerPageForm()
 
     if "submit_load_users" in request.form and load_user_form.validate_on_submit():
-        collect_more_users_thread(load_user_form.number_load_users.data)
+        collect_more_users_async(load_user_form.number_load_users.data)
         load_user_form.number_load_users.data = 0
         flash(
             "Users downloading. The page needs to be refreshed when the downloading is complete."
