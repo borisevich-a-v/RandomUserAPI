@@ -10,7 +10,7 @@ from flask_wtf import FlaskForm
 from PIL import Image
 from werkzeug.utils import secure_filename
 
-from app import db
+from app.app import db
 from app.main.forms import ChangeUserDataForm
 from app.models import User
 

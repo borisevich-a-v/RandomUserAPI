@@ -1,7 +1,7 @@
 """routine at server start"""
 import os
 
-from app import db
+from app.app import db
 from app.business_logic.api_data import collect_more_users
 from app.models import User
 

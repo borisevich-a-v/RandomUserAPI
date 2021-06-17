@@ -5,7 +5,7 @@ from typing import List
 
 import requests
 
-from app import db
+from app.app import db
 from app.models import User
 
 API_URL = "https://randomuser.me/api"
