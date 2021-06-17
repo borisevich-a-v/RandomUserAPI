@@ -83,7 +83,7 @@ def collect_more_users(number: int):
     :param number: number of users to add
     :type number: `int`"""
     users = convert_into_users(get_users_json(number))
-    from epam import app
+    from random_user_api import app
 
     with app.app_context():
         db.session.add_all(users)

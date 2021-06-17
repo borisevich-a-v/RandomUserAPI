@@ -11,11 +11,11 @@ from flask_wtf import FlaskForm
 from PIL import Image
 from werkzeug.utils import redirect, secure_filename
 
-from .. import db
+from app import db
 from app.api_data import collect_more_users
-from ..models import User
-from . import main
-from .forms import ChangeUserDataForm, NumberUsersToLoadForm, UsersPerPageForm
+from app.main import main
+from app.main.forms import ChangeUserDataForm, NumberUsersToLoadForm, UsersPerPageForm
+from app.models import User
 
 
 @main.route("/", methods=["GET", "POST"])

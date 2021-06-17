@@ -5,7 +5,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import epam
+import random_user_api
 from app import api_data
 from app.models import User
 from tests.conftest import TEST_USERS, FakeRequests
@@ -43,7 +43,9 @@ def test_collect_more_users(context):
     """Test that collect more users add users into database"""
     fake_users_json = [deepcopy(TEST_USERS[0])]
     api_data.get_users_json = MagicMock(return_value=fake_users_json)
-    epam.app.app_context = MagicMock(return_value=context["app"].app_context())
+    random_user_api.app.app_context = MagicMock(
+        return_value=context["app"].app_context()
+    )
     api_data.collect_more_users(1)
     count = User.query.count()
     assert count == 1

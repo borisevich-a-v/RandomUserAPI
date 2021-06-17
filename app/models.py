@@ -1,5 +1,6 @@
 """Describe models for database"""
-from . import db
+
+from app import db
 
 
 class User(db.Model):

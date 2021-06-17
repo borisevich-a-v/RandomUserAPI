@@ -1,13 +1,12 @@
 """Test that pages correct"""
-import json
+
 from copy import deepcopy
 from unittest.mock import MagicMock
 
 import pytest
 
-import epam
+import random_user_api
 from app import api_data
-from app.main.forms import ChangeUserDataForm
 from app.models import User
 from tests.conftest import TEST_USERS
 
@@ -32,7 +31,9 @@ def test_main_table(ext_context):
     # Add user
     fake_users_json = deepcopy(TEST_USERS)
     api_data.get_users_json = MagicMock(return_value=fake_users_json)
-    epam.app.app_context = MagicMock(return_value=ext_context["app"].app_context())
+    random_user_api.app.app_context = MagicMock(
+        return_value=ext_context["app"].app_context()
+    )
     api_data.collect_more_users(1)
     response = ext_context["client"].get("/")
     assert response.status_code == 200
@@ -46,7 +47,9 @@ def test_user_page(ext_context):
     # Add user
     fake_users_json = deepcopy(TEST_USERS)
     api_data.get_users_json = MagicMock(return_value=fake_users_json)
-    epam.app.app_context = MagicMock(return_value=ext_context["app"].app_context())
+    random_user_api.app.app_context = MagicMock(
+        return_value=ext_context["app"].app_context()
+    )
     api_data.collect_more_users(2)
     response = ext_context["client"].get("/1")
     assert response.status_code == 200
@@ -59,7 +62,9 @@ def test_change_user_data(ext_context):
     # Add user
     fake_users_json = deepcopy(TEST_USERS)
     api_data.get_users_json = MagicMock(return_value=fake_users_json)
-    epam.app.app_context = MagicMock(return_value=ext_context["app"].app_context())
+    random_user_api.app.app_context = MagicMock(
+        return_value=ext_context["app"].app_context()
+    )
     api_data.collect_more_users(2)
 
     # Change user 1

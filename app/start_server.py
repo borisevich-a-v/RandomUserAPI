@@ -18,7 +18,7 @@ def make_routines():
     """Tasks for starting server"""
     create_paths()
 
-    from epam import app
+    from random_user_api import app
 
     with app.app_context():
         db.create_all()  # Не могу нормально создать таблицу. Как правильно?
