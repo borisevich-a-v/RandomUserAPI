@@ -1,18 +1,17 @@
 """In this module describes all routes"""
-import os
-import tempfile
-from pathlib import Path
 from random import randint
-from threading import Thread
-from typing import Generator
 
 from flask import current_app, flash, render_template, request, url_for
-from flask_wtf import FlaskForm
-from PIL import Image
-from werkzeug.utils import redirect, secure_filename
+from werkzeug.utils import redirect
 
-from app import db
-from app.api_data import collect_more_users
+from app.business_logic.api_data import collect_more_users_thread
+from app.business_logic.change_user import (
+    change_data,
+    change_portrait,
+    create_user,
+    get_form_fields,
+    get_user_template,
+)
 from app.main import main
 from app.main.forms import ChangeUserDataForm, NumberUsersToLoadForm, UsersPerPageForm
 from app.models import User
@@ -25,12 +24,7 @@ def index():
     row_on_page_form = UsersPerPageForm()
 
     if "submit_load_users" in request.form and load_user_form.validate_on_submit():
-        get_users_task = Thread(
-            target=collect_more_users,
-            args=(load_user_form.number_load_users.data,),
-            daemon=True,
-        )
-        get_users_task.start()
+        collect_more_users_thread(load_user_form.number_load_users.data)
         load_user_form.number_load_users.data = 0
         flash(
             "Users downloading. The page needs to be refreshed when the downloading is complete."
@@ -79,15 +73,11 @@ def change_user_data(user_id):
     change_form = ChangeUserDataForm()
     user = User.query.filter(User.user_id == user_id).first()
 
-    attributes = generate_form_fields_names(ChangeUserDataForm)
-
     if change_form.validate_on_submit():
-        for attribute in attributes:
-            setattr(user, attribute, change_form[attribute].data)
-        db.session.commit()
+        change_data(user_id, change_form)
         return redirect(f"/{user_id}")
 
-    for attribute in attributes:
+    for attribute in get_form_fields(ChangeUserDataForm):
         change_form[attribute].data = getattr(user, attribute)
     return render_template(
         "change_user_data.html",
@@ -107,17 +97,9 @@ def change_user_portrait(user_id):
         if file.filename == "":
             flash("No selected file")
             return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            portrait_name = get_portraits(file, filename)
-            user = User.query.filter(User.user_id == user_id).first()
-            remove_pictures(
-                Path("app" + user.portrait_large), Path("app" + user.portrait_thumbnail)
-            )
-            src = "/static/portraits/"
-            user.portrait_large = src + "large/" + portrait_name
-            user.portrait_thumbnail = src + "thumbnail/" + portrait_name
-            db.session.commit()
+        if not change_portrait(user_id, file) == "Success":
+            flash("Bad file. Only jpg allowed.")
+            return redirect(request.url)
         return redirect(f"/{user_id}")
     return render_template("change_user_portrait.html")
 
@@ -126,80 +108,7 @@ def change_user_portrait(user_id):
 def new_user_data():
     """Create new user"""
     form = ChangeUserDataForm()
-    attributes = generate_form_fields_names(ChangeUserDataForm)
     if form.validate_on_submit():
-        user = User()
-        for attribute in attributes:
-            setattr(user, attribute, form[attribute].data)
-        db.session.add(user)
-        db.session.commit()
-        db.session.refresh(user)
-        return redirect(f"/{user.user_id}/change_portrait")
+        user_id = create_user(form)
+        return redirect(f"/{user_id}/change_portrait")
     return render_template("change_user_data.html", form=form, header="Create New User")
-
-
-def generate_form_fields_names(form: FlaskForm) -> Generator:
-    """Retern generator. Generator yield form field's data attributes"""
-    return (
-        attribute
-        for attribute in form.__dict__
-        if not (
-            attribute.startswith("_")
-            or attribute.startswith("<")
-            or attribute.startswith("submit")
-        )
-    )
-
-
-def allowed_file(filename):
-    """Check that file allowed"""
-    return (
-        "." in filename
-        and filename.rsplit(".", 1)[1].lower()
-        in current_app.config["ALLOWED_EXTENSIONS"]
-    )
-
-
-def get_user_template(user_id):
-    """Render user_template by user_id
-    :param user_id: user_id in database
-    :type user_id: `int`"""
-    user = User.query.filter_by(user_id=user_id).first_or_404(user_id)
-    return render_template("user.html", user=user, user_id=user_id)
-
-
-def resize_image(path):
-    """Resize image and save it in file system and return their paths"""
-    file_ids = [
-        int(os.path.splitext(filename)[0])
-        for filename in (os.listdir("app/static/portraits/large") or ["0.jpg"])
-    ]
-    file_id = str(max(file_ids) + 1)
-
-    with Image.open(path) as img:
-        img.thumbnail((128, 128))
-        path_large = Path("app/static/portraits/large", file_id + ".jpg")
-        img.save(path_large)
-
-        img.thumbnail((48, 48))
-        path_thumbnail = Path("app/static/portraits/thumbnail", file_id + ".jpg")
-        img.save(path_thumbnail)
-    return file_id + ".jpg"
-
-
-def get_portraits(file, filename):
-    """Save portraits in file system and return their paths"""
-    with tempfile.TemporaryDirectory() as tmpdirname:
-        filename = filename + str(randint(1, 10 ** 9))
-        path = Path(tmpdirname, filename)
-        file.save(path)
-        return resize_image(path)
-
-
-def remove_pictures(*paths):
-    """Remove pictures by paths"""
-    for path in paths:
-        try:
-            os.remove(path)
-        except (FileNotFoundError, IsADirectoryError):
-            pass

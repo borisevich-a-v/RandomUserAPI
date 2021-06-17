@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 import pytest
 
 import random_user_api
-from app import api_data
+from app.business_logic import api_data
 from app.models import User
 from tests.conftest import TEST_USERS
 

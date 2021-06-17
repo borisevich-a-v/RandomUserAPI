@@ -52,7 +52,6 @@ def upgrade():
         sa.Column("id_value", sa.String(), nullable=True),
         sa.Column("portrait_id", sa.Integer(), nullable=True),
         sa.PrimaryKeyConstraint("user_id"),
-
     )
     op.create_index(op.f("ix_users_user_id"), "users", ["user_id"], unique=False)
 

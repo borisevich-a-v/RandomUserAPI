@@ -4,6 +4,15 @@
 {% block title %}Change User Photo: {{ user_id }}{% endblock %}
 
 {% block page_content %}
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+
 
 <h1>Upload new File</h1>
 <form method=post enctype=multipart/form-data>

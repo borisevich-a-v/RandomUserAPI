@@ -2,7 +2,7 @@
 import os
 
 from app import db
-from app.api_data import collect_more_users
+from app.business_logic.api_data import collect_more_users
 from app.models import User
 
 

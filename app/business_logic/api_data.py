@@ -1,5 +1,6 @@
 """Contain functions to communicate with API and convert raw data"""
 import json
+from threading import Thread
 from typing import List
 
 import requests
@@ -78,7 +79,7 @@ def convert_into_users(users_array: List[dict]) -> List[User]:
     return [convert_user(user_data) for user_data in users_array]
 
 
-def collect_more_users(number: int):
+def collect_more_users(number: int) -> None:
     """Add more users into database from API
     :param number: number of users to add
     :type number: `int`"""
@@ -88,3 +89,15 @@ def collect_more_users(number: int):
     with app.app_context():
         db.session.add_all(users)
         db.session.commit()
+
+
+def collect_more_users_thread(number: int) -> None:
+    """Create thread and run in it collect_more_users
+    :param number: number of users to add
+    :type number: `int`"""
+    get_users_task = Thread(
+        target=collect_more_users,
+        args=(number,),
+        daemon=True,
+    )
+    get_users_task.start()
