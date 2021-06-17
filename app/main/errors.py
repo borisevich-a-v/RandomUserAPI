@@ -1,7 +1,7 @@
 """Error handlers"""
 from flask import render_template
 
-from app.main import main
+from app.main.blueprints import main
 
 
 @main.app_errorhandler(404)

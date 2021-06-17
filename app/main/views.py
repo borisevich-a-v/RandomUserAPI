@@ -12,7 +12,7 @@ from app.business_logic.change_user import (
     get_form_fields,
     get_user_template,
 )
-from app.main import main
+from app.main.blueprints import main
 from app.main.forms import ChangeUserDataForm, NumberUsersToLoadForm, UsersPerPageForm
 from app.models import User
 
