@@ -21,6 +21,6 @@ def make_routines():
     from random_user_api import app
 
     with app.app_context():
-        db.create_all()  # Не могу нормально создать таблицу. Как правильно?
+        db.create_all()
         if User.query.count() < 1000:
             collect_more_users(1000 - User.query.count())

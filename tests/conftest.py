@@ -1,6 +1,6 @@
 import pytest
 
-from app import create_app, db
+from app.app import create_app, db
 
 TEST_USERS = [
     {
