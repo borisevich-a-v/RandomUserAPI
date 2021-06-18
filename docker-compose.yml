@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    image: tinker000/random_user_api
+    container_name: random_user_api
+    ports:
+      - 5000:5000
+    environment:
+      FLASK_APP: random_user_api.py
+      DEBUG: 0
+      FLASK_CONFIG: production
+      SECRET_KEY: put_your_key_here
