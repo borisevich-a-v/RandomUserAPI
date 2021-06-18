@@ -31,7 +31,6 @@ def test_get_user_json_positive(monkeypatch):
     fake_api_json = json.dumps(
         {"info": {"results": 1}, "results": [deepcopy(TEST_USERS[0])]}
     )
-
     monkeypatch.setattr(api_data, "requests", FakeRequests(200, fake_api_json))
     result = api_data.get_users_json(1)
     assert len(result) == 1

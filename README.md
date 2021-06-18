@@ -13,7 +13,7 @@
 "Change photo". Для создания нового выбрать в главном меню "New user".
 
 ## Установка
-1. Install Docker, Docker-compose
+1. Установить Docker, Docker-compose
 2. Скачать файл docker-compose.yml из текущего репозитория.
 3. В файле docker-compose.yml изменить значение SECRET_KEY
 4. Перейти в директорию с файлом docker-compose.yml 

@@ -117,7 +117,7 @@ def create_user(form):
     """Add new user row"""
     user = User()
     for attribute in get_form_fields(ChangeUserDataForm):
-        setattr(user, attribute, form[attribute].data)
+        setattr(user, attribute, getattr(form, attribute).data)
     db.session.add(user)
     db.session.commit()
     db.session.refresh(user)

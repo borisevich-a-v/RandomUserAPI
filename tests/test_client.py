@@ -74,8 +74,8 @@ def test_change_user_data(ext_context):
     # Change user 1
     test_data = {
         "gender": "male",
-        "email": "e@e.e",
-        "phone": "e",
+        "email": "realmail@example.com",
+        "phone": "+1 111 111 11 11",
         "first_name": "e",
         "last_name": "e",
         "street_name": "e",
@@ -89,16 +89,16 @@ def test_change_user_data(ext_context):
     assert response.status_code < 400
 
     user = User.query.get(1)
-    assert user.gender == "male"
-    assert user.email == "e@e.e"
-    assert user.phone == "e"
-    assert user.first_name == "e"
-    assert user.last_name == "e"
-    assert user.street_name == "e"
-    assert user.city == "e"
-    assert user.state == "e"
-    assert user.country == "e"
-    assert user.postcode == "e"
+    assert user.gender == test_data["gender"]
+    assert user.email == test_data["email"]
+    assert user.phone == test_data["phone"]
+    assert user.first_name == test_data["first_name"]
+    assert user.last_name == test_data["last_name"]
+    assert user.street_name == test_data["street_name"]
+    assert user.city == test_data["city"]
+    assert user.state == test_data["state"]
+    assert user.country == test_data["country"]
+    assert user.postcode == test_data["postcode"]
 
 
 def check_change_user_portrait(photo, context, path_l, path_t):

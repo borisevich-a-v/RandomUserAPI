@@ -1,8 +1,10 @@
 """Forms for pages"""
-
+import phonenumbers
 from flask_wtf import FlaskForm
+from phonenumbers import NumberParseException
 from wtforms import IntegerField, RadioField, StringField, SubmitField
-from wtforms.validators import Length, NumberRange
+from wtforms.fields.html5 import TelField
+from wtforms.validators import DataRequired, Email, NumberRange, ValidationError
 
 
 class NumberUsersToLoadForm(FlaskForm):
@@ -29,15 +31,27 @@ class UsersPerPageForm(FlaskForm):
     submit_pagination = SubmitField("Ok")
 
 
+def check_phone(form, field):
+    """Validator for phone field"""
+    if len(field.data) > 16:
+        raise ValidationError("Invalid phone number.")
+    try:
+        input_number = phonenumbers.parse(field.data)
+        if len(str(input_number.national_number)) != 10:
+            raise ValidationError("Invalid phone number.")
+    except NumberParseException:
+        raise ValidationError("Invalid phone number.")
+
+
 class ChangeUserDataForm(FlaskForm):
     """Form. Serve to get new user's data"""
 
-    gender = RadioField("Gender", choices=["male", "female"])
-    email = StringField("Email")
-    phone = StringField("Phone", validators=[Length(0, 32)])
+    gender = RadioField("Gender", choices=["male", "female", "other"])
+    email = StringField("Email", validators=[Email(), DataRequired()])
+    phone = TelField("Phone", validators=[check_phone, DataRequired()])
 
-    first_name = StringField("First name")
-    last_name = StringField("Last name")
+    first_name = StringField("First name", validators=[DataRequired()])
+    last_name = StringField("Last name", validators=[DataRequired()])
 
     street_name = StringField("Street name")
     city = StringField("City")
