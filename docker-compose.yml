@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: tinker000/random_user_api
+    build: .
     container_name: random_user_api
     ports:
       - 5000:5000
