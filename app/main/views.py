@@ -1,7 +1,7 @@
 """In this module describes all routes"""
 from random import randint
 
-from flask import current_app, flash, render_template, request, url_for
+from flask import Blueprint, current_app, flash, render_template, request, url_for
 from werkzeug.utils import redirect
 
 from app.business_logic.api_data import collect_more_users_async
@@ -13,8 +13,9 @@ from app.business_logic.change_user import (
     get_user_template,
 )
 from app.main.forms import ChangeUserDataForm, NumberUsersToLoadForm, UsersPerPageForm
-from app.main.register_blueprints import main
 from app.models import User
+
+main = Blueprint("main", __name__)
 
 
 @main.route("/", methods=["GET", "POST"])
@@ -113,3 +114,15 @@ def new_user_data():
         user_id = create_user(form)
         return redirect(f"/{user_id}/change_portrait")
     return render_template("change_user_data.html", form=form, header="Create New User")
+
+
+@main.app_errorhandler(404)
+def page_not_found(error):
+    """Handle 404 error"""
+    return render_template("404.html"), 404
+
+
+@main.app_errorhandler(500)
+def internal_server_error(error):
+    """Handle 500 error"""
+    return render_template("500.html"), 500

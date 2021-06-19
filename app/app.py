@@ -17,7 +17,7 @@ def create_app(config_name):
     bootstrap.init_app(app)
     db.init_app(app)
 
-    from .main.register_blueprints import main as main_blueprint
+    from app.main.views import main as main_blueprints
 
-    app.register_blueprint(main_blueprint)
+    app.register_blueprint(main_blueprints)
     return app
