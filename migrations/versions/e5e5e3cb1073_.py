@@ -16,6 +16,7 @@ depends_on = None
 
 
 def upgrade():
+    """1. Remove extra columns."""
     with op.batch_alter_table("users") as batch_op:
         batch_op.drop_column("registered_date")
         batch_op.drop_column("registered_age")

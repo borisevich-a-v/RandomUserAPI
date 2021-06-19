@@ -16,6 +16,7 @@ depends_on = None
 
 
 def upgrade():
+    """Add portrait column into users"""
     op.add_column("users", sa.Column("portrait_large", sa.String(), nullable=True))
     op.add_column("users", sa.Column("portrait_thumbnail", sa.String(), nullable=True))
 

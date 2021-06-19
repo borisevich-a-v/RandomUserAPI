@@ -1,3 +1,4 @@
+"""Check that testing is ok"""
 from flask import current_app
 
 

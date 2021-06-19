@@ -39,8 +39,8 @@ def check_phone(form, field):
         input_number = phonenumbers.parse(field.data)
         if len(str(input_number.national_number)) != 10:
             raise ValidationError("Invalid phone number.")
-    except NumberParseException:
-        raise ValidationError("Invalid phone number.")
+    except NumberParseException as error:
+        raise ValidationError("Invalid phone number.") from error
 
 
 class ChangeUserDataForm(FlaskForm):

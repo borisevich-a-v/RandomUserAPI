@@ -12,8 +12,8 @@ from app.business_logic.change_user import (
     get_form_fields,
     get_user_template,
 )
-from app.main.blueprints import main
 from app.main.forms import ChangeUserDataForm, NumberUsersToLoadForm, UsersPerPageForm
+from app.main.register_blueprints import main
 from app.models import User
 
 
@@ -27,7 +27,8 @@ def index():
         collect_more_users_async(load_user_form.number_load_users.data)
         load_user_form.number_load_users.data = 0
         flash(
-            "Users downloading. The page needs to be refreshed when the downloading is complete."
+            "Users downloading. "
+            + "The page needs to be refreshed when the downloading is complete."
         )
         return redirect(url_for("main.index"))
 

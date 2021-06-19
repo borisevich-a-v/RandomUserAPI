@@ -1,12 +1,10 @@
 """Test that pages correct"""
-import io
 import os
 from copy import deepcopy
 from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
-from flask import url_for
 
 import random_user_api
 from app.business_logic import api_data
@@ -31,7 +29,7 @@ def test_404(ext_context):
 
 
 def test_main_table(ext_context):
-    """Test that table on main page correct"""
+    """Test table on main page is built correctly"""
     # Add user
     fake_users_json = deepcopy(TEST_USERS)
     api_data.get_users_json = MagicMock(return_value=fake_users_json)
@@ -142,3 +140,34 @@ def test_change_user_portrait(ext_context):
         finally:
             os.remove(path_l)
             os.remove(path_t)
+
+
+def test_create_new_user(ext_context):
+    """Test that new user created correct"""
+    test_data = {
+        "gender": "male",
+        "email": "realmail@example.com",
+        "phone": "+1 111 111 11 11",
+        "first_name": "e",
+        "last_name": "e",
+        "street_name": "e",
+        "city": "e",
+        "state": "e",
+        "country": "e",
+        "postcode": "e",
+    }
+    response = ext_context["client"].post("/new_user", data=test_data)
+
+    assert response.status_code < 400
+
+    user = User.query.get(1)
+    assert user.gender == test_data["gender"]
+    assert user.email == test_data["email"]
+    assert user.phone == test_data["phone"]
+    assert user.first_name == test_data["first_name"]
+    assert user.last_name == test_data["last_name"]
+    assert user.street_name == test_data["street_name"]
+    assert user.city == test_data["city"]
+    assert user.state == test_data["state"]
+    assert user.country == test_data["country"]
+    assert user.postcode == test_data["postcode"]

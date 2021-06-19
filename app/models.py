@@ -3,13 +3,12 @@ from app.app import db
 
 
 class User(db.Model):
-    """Class user describes entity of user for database
-    user_id:"""
+    """Class user describes entity of user for database"""
 
     __tablename__ = "users"
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True, index=True)
 
-    gender = db.Column(db.String)  # Maybe create another table?
+    gender = db.Column(db.String)
     email = db.Column(db.String)
     phone = db.Column(db.String(32))
 
