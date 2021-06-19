@@ -10,8 +10,8 @@ fi
 
 set -e
 
+
 isort $CHANGED_PYTHON_FILES
 black $CHANGED_PYTHON_FILES
-
 git add $CHANGED_PYTHON_FILES
 
