@@ -1,6 +1,7 @@
 import pytest
 
 from app.app import create_app, db
+from app.business_logic.start_server import create_paths
 
 TEST_USERS = [
     {
@@ -42,6 +43,7 @@ TEST_USERS = [
 
 @pytest.fixture
 def context():
+    create_paths()
     app = create_app("testing")
     app_context = app.app_context()
     app_context.push()

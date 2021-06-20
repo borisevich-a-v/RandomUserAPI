@@ -14,13 +14,17 @@ def create_paths():
             os.makedirs(os.path.dirname(path))
 
 
-def make_routines():
-    """Tasks for starting server"""
-    create_paths()
-
+def load_users_up_to_n(number):
+    """Load users from API up to 1000"""
     from random_user_api import app
 
     with app.app_context():
         db.create_all()
-        if User.query.count() < 1000:
-            collect_more_users(1000 - User.query.count())
+        if User.query.count() < number:
+            collect_more_users(number - User.query.count())
+
+
+def make_routines():
+    """Tasks for starting server"""
+    create_paths()
+    load_users_up_to_n(1000)
