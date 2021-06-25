@@ -1,4 +1,6 @@
 """Describe models for database"""
+from typing import List
+
 from app.app import db
 
 
@@ -31,3 +33,34 @@ class User(db.Model):
             if not arg.startswith("_")
         ]
         return "User(" + ", ".join(args) + ")"
+
+    @classmethod
+    def _convert_from_json(cls, user_json: dict):  # TODO -> return
+        """Convert user's data from JSON to `class` USER
+        :param user_json: user's data in JSON
+        :type user_json: :class:`dict`
+        :return: users data in :class:`User` format
+        :rtype: :class:`User`"""
+        return cls(
+            gender=user_json["gender"],
+            email=user_json["email"],
+            phone=user_json["phone"],
+            first_name=user_json["name"]["first"],
+            last_name=user_json["name"]["last"],
+            street_name=user_json["location"]["street"]["name"],
+            city=user_json["location"]["city"],
+            state=user_json["location"]["state"],
+            country=user_json["location"]["country"],
+            postcode=user_json["location"]["postcode"],
+            portrait_large=user_json["picture"]["large"],
+            portrait_thumbnail=user_json["picture"]["thumbnail"],
+        )
+
+    @classmethod
+    def convert_into_users(cls, users_array: List[dict]):  # TODO -> List[User]:
+        """Convert specific JSON into User
+        :param users_array: list of JSON's
+        :type users_array: `list`
+        :return: list of :class:`User`
+        :rtype: `list`"""
+        return [cls._convert_from_json(user_data) for user_data in users_array]

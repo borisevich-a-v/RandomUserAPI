@@ -12,6 +12,7 @@ class Config(metaclass=ABCMeta):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIN_PAGE_ROW_PER_PAGE = 50
     ALLOWED_EXTENSIONS = {"jpg"}
+    MAX_CONTENT_LENGTH = 1024 * 1024
 
     @staticmethod
     def init_app(app):
@@ -37,8 +38,9 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     """Config for production"""
 
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") \
-                              or "sqlite:///" + os.path.join(basedir, "data.sqlite")
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+        "DATABASE_URL"
+    ) or "sqlite:///" + os.path.join(basedir, "data.sqlite")
 
 
 config = {

@@ -74,6 +74,8 @@ def change_user_data(user_id):
     """User change form"""
     change_form = ChangeUserDataForm()
     user = User.query.filter(User.user_id == user_id).first()
+    if not user:
+        return render_template("404.html"), 404
 
     if change_form.validate_on_submit():
         change_data(user_id, change_form)
