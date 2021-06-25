@@ -1,3 +1,26 @@
+# Work with the external API
+
+## Description
+
+The web application is designed to work with the API https://randomuser.me/.
+The table with data of downloaded users and the form for additional downloading users from the API are located on the main page.
+There are three ways to get a full profile of a user: directly by a user's id (http://homepage/user_id), click on a URL in
+a cell in the last table's column or get a random user's profile by clicking on "Random user" in the main menu.
+
+There are abilities to edit a user's profile and create a new user. Open user's profile and select
+"Change text" or "Change photo" for editing a user's profile. To create a new one, select "New user” in the main menu.
+
+## How to run
+
+1. Install Docker and Docker-compose
+2. Download docker-compose.yml from this repository
+3. Change SECRET_KEY in docker-compose.yml
+4. Select directory with docker-compose.yml
+5. Up docker-compose:
+```
+docker-compose up
+```
+
 # Работа с внешним API
 
 ## Описание
@@ -18,9 +41,7 @@
 3. В файле docker-compose.yml изменить значение SECRET_KEY
 4. Перейти в директорию с файлом docker-compose.yml 
 5. Поднять docker-compose
-```
-docker-compose up
-```
+
 
 ## Задание
 Необходимо разработать приложение для взаимодействия с внешним API: https://randomuser.me/.
