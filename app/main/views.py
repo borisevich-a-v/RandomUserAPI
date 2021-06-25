@@ -93,6 +93,9 @@ def change_user_data(user_id):
 @main.route("/<user_id>/change_portrait", methods=["GET", "POST"])
 def change_user_portrait(user_id):
     """For change or add user portrait"""
+    user = User.query.filter(User.user_id == user_id).first()
+    if not user:
+        return render_template("404.html"), 404
     if request.method == "POST":
         if "file" not in request.files:
             flash("No file part")
